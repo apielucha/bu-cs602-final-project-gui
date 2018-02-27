@@ -27,7 +27,8 @@ export default {
     };
   },
   created() {
-    axios.get('http://localhost:8081').then((response) => { this.list = response.data; });
+    axios.get(`${process.env.API_URL}/images`)
+      .then((response) => { this.list = response.data; });
   },
 };
 </script>

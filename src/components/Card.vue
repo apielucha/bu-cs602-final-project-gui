@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <img class="card-img-top" src="/test" alt="Card image cap">
+    <img class="card-img-top" :src="imgSrc" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ data.message }}</h5>
       <p class="card-text">
@@ -16,11 +16,16 @@
 export default {
   name: 'Card',
   props: ['data'],
+  computed: {
+    imgSrc() {
+      return process.env.API_URL + this.data.url;
+    },
+  },
 };
 </script>
 
 <style scoped>
   .card {
-    width: 30%;
+    width: 32%;
   }
 </style>
