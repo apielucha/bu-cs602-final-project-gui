@@ -15,7 +15,7 @@
 
 <script>
 import axios from 'axios';
-import Card from '@/components/Card';
+import Card from '@/components/_partials/Card';
 
 export default {
   name: 'Home',

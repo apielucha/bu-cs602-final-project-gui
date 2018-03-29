@@ -26,6 +26,13 @@
               Profile
             </router-link>
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              :href="apiUrl + '/logout'">
+              Logout
+            </a>
+          </li>
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
@@ -48,6 +55,9 @@ export default {
     };
   },
   computed: {
+    apiUrl() {
+      return process.env.API_URL;
+    },
     url() {
       return this.$route.path;
     },

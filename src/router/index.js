@@ -1,16 +1,23 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/components/Home';
-import Test from '@/components/Test';
+import Home from '@/components/pages/Home';
+import Login from '@/components/pages/Login';
+import Test from '@/components/pages/Test';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'Home',
       component: Home,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
     },
     {
       path: '/test',
@@ -19,3 +26,20 @@ export default new Router({
     },
   ],
 });
+
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (!auth.loggedIn) {
+//       next({
+//         path: '/login',
+//         query: { redirect: to.fullPath },
+//       });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
+
+export default router;
