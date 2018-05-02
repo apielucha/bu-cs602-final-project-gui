@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/pages/Home';
 import Login from '@/components/pages/Login';
-import Test from '@/components/pages/Test';
 
 Vue.use(Router);
 
@@ -18,11 +17,6 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login,
-    },
-    {
-      path: '/test',
-      name: 'Test',
-      component: Test,
     },
   ],
 });
