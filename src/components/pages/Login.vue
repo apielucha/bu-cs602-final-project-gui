@@ -1,30 +1,55 @@
 <template>
-  <div class="blur">
-    <div class="container">
-      <div class="row">
-        <h1 class="col-12 text-center">OutStagram</h1>
-      </div>
-      <div class="row">
-        <!-- .separator -->
-        <div class="col-lg-6">
-          <h2>Log in</h2>
-          <form id="form-login" :action="apiUrl + '/login'" method="post">
-            <input type="email" name="email" placeholder="Email address">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log in" class="btn btn-info">
-          </form>
+  <div class="login">
+    <div class="blur">
+      <div class="container">
+        <div class="row">
+          <h1 class="col-12 text-center">Pinstagram</h1>
         </div>
-        <div class="col-lg-6">
-          <h2>Register</h2>
-          <form id="form-register" :action="apiUrl + '/register'" method="post">
-            <div class="combined">
-              <input type="text" name="firstname" placeholder="First name">
-              <input type="text" name="lastname" placeholder="Last name">
-            </div>
-            <input type="email" name="email" placeholder="Email address">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Sign up" class="btn btn-info">
-          </form>
+        <div class="row">
+          <div class="col-lg-6">
+            <h2>Log in</h2>
+            <form id="form-login" @submit.prevent="submitLogin">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                v-model="login.email">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                v-model="login.password">
+              <input type="submit" value="Log in" class="btn btn-info">
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <h2>Register</h2>
+            <form id="form-register" @submit.prevent="submitRegister">
+              <div class="combined">
+                <input
+                  type="text"
+                  name="firstname"
+                  placeholder="First name"
+                  v-model="register.firstname">
+                <input
+                  type="text"
+                  name="lastname"
+                  placeholder="Last name"
+                  v-model="register.lastname">
+              </div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                v-model="register.email">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                v-model="register.password">
+              <input type="submit" value="Sign up" class="btn btn-info">
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -32,18 +57,66 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'querystring';
+
 export default {
   name: 'Login',
+  data() {
+    return {
+      login: {
+        email: '',
+        password: '',
+      },
+      register: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+      },
+    };
+  },
   computed: {
     apiUrl() {
       return process.env.API_URL;
     },
   },
+  methods: {
+    submitLogin() {
+      const url = `${process.env.API_URL}/login`;
+      const config = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
+
+      axios.post(url, qs.stringify(this.login), config)
+        .then(response => response.data)
+        .then((res) => {
+          if (res.status === 200) {
+            localStorage.setItem('sessionID', res.sessionID);
+            this.$router.push('/');
+          }
+        });
+      // .catch((err) => { /* Handle form error */ });
+    },
+    submitRegister() {
+      const url = `${process.env.API_URL}/register`;
+      const config = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
+
+      axios.post(url, qs.stringify(this.register), config)
+        .then(response => response.data)
+        .then((res) => {
+          if (res.status === 200) {
+            localStorage.setItem('sessionID', res.sessionID);
+            this.$router.push('/');
+          }
+        });
+      // .catch((err) => { /* Handle form error */ });
+    },
+  },
 };
 </script>
 
-<style>
-  body {
+<style scoped>
+  .login {
+    height: 100vh;
     background-image: url('/static/img/login-background.jpg');
   }
 

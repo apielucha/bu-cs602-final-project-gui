@@ -4,6 +4,9 @@
     <div class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
       <p class="card-text">{{ data.text }}</p>
+      <p class="card-text"><small class="text-muted">
+        {{ data.author }} - {{ date }}
+      </small></p>
     </div>
   </div>
 </template>
@@ -16,6 +19,9 @@ export default {
     imgSrc() {
       return process.env.API_URL + this.data.url;
     },
+    date() {
+      return new Date(this.data.timestamp).toLocaleDateString('en-US');
+    },
   },
 };
 </script>
@@ -23,5 +29,6 @@ export default {
 <style scoped>
   .card {
     width: 32%;
+    margin-bottom: 10px;
   }
 </style>

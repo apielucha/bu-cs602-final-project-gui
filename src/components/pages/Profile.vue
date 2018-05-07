@@ -1,10 +1,10 @@
-<template>
+<template lang="html">
   <main class="container">
     <div class="row welcome">
       <div class="card">
         <div class="card-body text-center">
           <a data-toggle="modal" data-target="#modal-add">
-            Share your photos with others
+            Add photos to your collection
           </a>
           <ModalAddPhoto id="modal-add" @uploaded="uploadedPhoto" />
         </div>
@@ -25,7 +25,7 @@ import CardPhoto from '@/components/_partials/CardPhoto';
 import ModalAddPhoto from '@/components/_partials/ModalAddPhoto';
 
 export default {
-  name: 'Home',
+  name: 'Profile',
   components: { CardPhoto, ModalAddPhoto },
   props: ['searchString'],
   data() {
@@ -34,7 +34,7 @@ export default {
     };
   },
   created() {
-    axios.get(`${process.env.API_URL}/pictures`)
+    axios.get(`${process.env.API_URL}/pictures/me`)
       .then((response) => { this.photos = response.data; });
   },
   watch: {

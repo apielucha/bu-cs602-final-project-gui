@@ -29,7 +29,8 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              :href="apiUrl + '/logout'">
+              href="#"
+              @click="logout">
               Logout
             </a>
           </li>
@@ -37,9 +38,12 @@
 
         <form class="form-inline my-2 my-lg-0">
           <input
-            class="form-control mr-sm-2" type="search"
-            placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            id="input-search"
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search">
+          <button class="btn btn-outline-light my-2 my-sm-0" @click.prevent="search">Search</button>
         </form>
       </div>
     </div>
@@ -47,11 +51,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Header',
   data() {
     return {
-      title: 'OutStagram',
+      title: 'Pinstagram',
     };
   },
   computed: {
@@ -65,6 +71,22 @@ export default {
   methods: {
     isUrl(url) {
       return this.url === url;
+    },
+    logout() {
+      const url = `${process.env.API_URL}/logout`;
+
+      axios.get(url)
+        .then(response => response.data)
+        .then((res) => {
+          if (res.status === 200) {
+            localStorage.setItem('sessionID', '');
+            this.$router.push('/login');
+          }
+        });
+    },
+    search() {
+      const name = document.getElementById('input-search').value;
+      this.$emit('searched', name);
     },
   },
 };
