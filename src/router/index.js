@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
-import qs from 'querystring';
 import Home from '@/components/pages/Home';
 import Login from '@/components/pages/Login';
 import Profile from '@/components/pages/Profile';
@@ -33,13 +32,11 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const url = `${process.env.API_URL}/testAuth`;
-    const data = qs.stringify({ sessionID: localStorage.getItem('sessionID') });
     const config = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      // withCredentials: true,
     };
 
-    axios.post(url, data, config)
+    axios.get(url, config)
       .then(() => { next(); })
       .catch(() => {
         next({

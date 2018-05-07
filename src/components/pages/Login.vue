@@ -90,7 +90,6 @@ export default {
         .then(response => response.data)
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem('sessionID', res.sessionID);
             this.$router.push('/');
           }
         });
@@ -104,7 +103,6 @@ export default {
         .then(response => response.data)
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem('sessionID', res.sessionID);
             this.$router.push('/');
           }
         });
